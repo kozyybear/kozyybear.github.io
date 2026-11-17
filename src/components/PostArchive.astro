@@ -18,7 +18,7 @@ const title = tag ?? "Bài viết";
       {getTags(posts).map(value => <a class="filter-link" href={tagUrl(value)} aria-current={tag === value ? "page" : undefined}>{value}</a>)}
     </nav>
     <div class="archive-list">
-      {visiblePosts.length === 0 && <p class="empty-state">Chủ đề này chưa có bài viết.</p>}
+      {visiblePosts.length === 0 && <p class="empty-state">{tag ? "Chủ đề này chưa có bài viết." : "Chưa có bài viết."}</p>}
       {visiblePosts.map(post => (
         <article class="archive-row">
           <time datetime={dateISO(post.data.date)}>{displayDate(post.data.date)}</time>

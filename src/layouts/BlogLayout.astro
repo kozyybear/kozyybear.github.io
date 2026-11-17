@@ -2,7 +2,7 @@
 import Brand from "../components/Brand.astro";
 import MeteorSky from "../components/MeteorSky.astro";
 
-const { title, description = "Ghi chép về điều tra số, công nghệ và những chuyện ngoài bàn phím.", section } = Astro.props;
+const { title, description = "Mỗi bước đều phải là đi lên.", section } = Astro.props;
 const isHome = Astro.url.pathname === "/";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const navigation = [
@@ -16,7 +16,7 @@ const navigation = [
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{isHome ? "Kozybear · Ghi chép lúc rảnh" : title + " · Kozybear"}</title>
+  <title>{isHome ? "Kozyybear · Người bình thường" : title + " · Kozyybear"}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>
   <meta name="theme-color" content="#18171d">
@@ -53,7 +53,7 @@ const navigation = [
       
     <Brand />
     
-      <span class="footer-note">Blog cá nhân của Kozybear</span>
+      <span class="footer-note">Blog cá nhân của Kozyybear</span>
       <a class="back-to-top" href="#dau-trang">Lên đầu trang <span class="arrow arrow-up" aria-hidden="true"></span></a>
     </div>
   </footer>

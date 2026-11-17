@@ -2,7 +2,6 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export type Post = CollectionEntry<"blog">;
 export const archiveUrl = "/bai-viet/";
-const defaultTags = ["Forensics", "Công nghệ", "Tản mạn"];
 
 export function tagSlug(tag: string) {
   const slug = tag.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
@@ -24,7 +23,7 @@ export async function getPosts() {
 }
 
 export function getTags(posts: Post[]) {
-  const tags = new Map(defaultTags.map(tag => [tagSlug(tag), tag]));
+  const tags = new Map<string, string>();
   for (const post of posts) {
     for (const tag of post.data.tags) {
       if (!tags.has(tagSlug(tag))) tags.set(tagSlug(tag), tag);
