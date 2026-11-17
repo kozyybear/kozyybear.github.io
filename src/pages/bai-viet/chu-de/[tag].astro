@@ -1,0 +1,11 @@
+---
+import PostArchive from "../../../components/PostArchive.astro";
+import { getPosts, getTags, tagSlug } from "../../../lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getTags(posts).map(tag => ({ params: { tag: tagSlug(tag) }, props: { tag, posts } }));
+}
+const { tag, posts } = Astro.props;
+---
+<PostArchive posts={posts} tag={tag} />

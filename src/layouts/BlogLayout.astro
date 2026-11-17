@@ -1,0 +1,78 @@
+---
+import Brand from "../components/Brand.astro";
+import MeteorSky from "../components/MeteorSky.astro";
+
+const { title, description = "Ghi chép về điều tra số, công nghệ và những chuyện ngoài bàn phím.", section } = Astro.props;
+const isHome = Astro.url.pathname === "/";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const navigation = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/bai-viet/", label: "Bài viết" },
+  { href: "/gioi-thieu/", label: "Giới thiệu" },
+];
+---
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{isHome ? "Kozybear · Ghi chép lúc rảnh" : title + " · Kozybear"}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta name="theme-color" content="#18171d">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script is:inline src="/assets/theme.js"></script>
+  <script is:inline src="/assets/search-index.js" defer></script>
+  <script is:inline src="/assets/site.js" defer></script>
+</head>
+<body id="dau-trang">
+  <a class="skip-link" href="#noi-dung">Đến nội dung</a>
+  <header class="site-header">
+    <div class="wrap header-layout">
+      
+    <Brand />
+    
+      <nav class="main-nav" aria-label="Điều hướng chính">{navigation.map(({ href, label }) => <a href={href} aria-current={section === href ? "page" : undefined}>{label}</a>)}</nav>
+      <div class="header-actions" data-enhanced hidden>
+        <button class="icon-button search-toggle" type="button" aria-label="Tìm bài viết" title="Tìm bài viết (Ctrl K)">
+          <span class="search-icon" aria-hidden="true"></span>
+        </button>
+        <button class="icon-button theme-toggle" type="button" aria-label="Bật giao diện sáng" title="Bật giao diện sáng">
+          <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <button class="icon-button meteor-toggle" type="button" aria-label="Hiệu ứng sao băng" aria-pressed="false">
+          <span class="meteor-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="noi-dung" class:list={[{ "page-with-sky": !isHome }]}>{!isHome && <MeteorSky />}<slot /></main>
+  <footer class="site-footer">
+    <div class="wrap footer-layout">
+      
+    <Brand />
+    
+      <span class="footer-note">Blog cá nhân của Kozybear</span>
+      <a class="back-to-top" href="#dau-trang">Lên đầu trang <span class="arrow arrow-up" aria-hidden="true"></span></a>
+    </div>
+  </footer>
+  <dialog class="search-dialog" aria-labelledby="search-heading">
+    <div class="search-head">
+      <h2 id="search-heading">Tìm bài viết</h2>
+      <form method="dialog">
+        <button class="icon-button close-search" aria-label="Đóng tìm kiếm" title="Đóng tìm kiếm">
+          <span class="close-icon" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+    <label class="search-field">
+      <span class="search-icon" aria-hidden="true"></span>
+      <span class="sr-only">Tên bài, chủ đề hoặc từ khóa</span>
+      <input type="search" placeholder="Tên bài, chủ đề hoặc từ khóa…" autocomplete="off" autofocus>
+    </label>
+    <p class="search-announcement sr-only" role="status"></p>
+    <div class="search-results"></div>
+  </dialog>
+</body>
+</html>

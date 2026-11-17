@@ -1,0 +1,5 @@
+---
+import PostArchive from "../../components/PostArchive.astro";
+import { getPosts } from "../../lib/blog";
+---
+<PostArchive posts={await getPosts()} />

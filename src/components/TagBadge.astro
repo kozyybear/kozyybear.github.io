@@ -1,0 +1,5 @@
+---
+import { tagSlug } from "../lib/blog";
+const { tag } = Astro.props;
+---
+<span class:list={["category", "category-" + tagSlug(tag)]}>{tag}</span>

@@ -1,0 +1,19 @@
+---
+import { dateISO, displayDate, postUrl, readTime, type Post } from "../lib/blog";
+import TagBadge from "./TagBadge.astro";
+interface Props { post: Post }
+const { post } = Astro.props;
+const { date, tags, title, description } = post.data;
+---
+<article class="post-card">
+  <div class="post-card-meta">
+    <TagBadge tag={tags[0]} />
+    <time datetime={dateISO(date)}>{displayDate(date)}</time>
+  </div>
+  <h3><a class="post-link" href={postUrl(post)}>{title}</a></h3>
+  <p>{description}</p>
+  <div class="post-card-foot">
+    <span>{readTime(post)}</span>
+    <span class="card-arrow"><span class="arrow arrow-diagonal" aria-hidden="true"></span></span>
+  </div>
+</article>

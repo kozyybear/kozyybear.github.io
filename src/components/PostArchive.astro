@@ -1,0 +1,35 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+import TagBadge from "./TagBadge.astro";
+import { archiveUrl, dateISO, displayDate, getTags, postUrl, tagSlug, tagUrl, type Post } from "../lib/blog";
+interface Props { posts: Post[]; tag?: string }
+const { posts, tag } = Astro.props;
+const visiblePosts = tag ? posts.filter(post => post.data.tags.some(value => tagSlug(value) === tagSlug(tag))) : posts;
+const title = tag ?? "Bài viết";
+---
+<BlogLayout title={title} section={archiveUrl}>
+  <div class="wrap archive-page">
+    <header class="page-intro">
+      <h1>{title}</h1>
+      <p>Tìm theo chủ đề hoặc xem những bài mình viết gần đây.</p>
+    </header>
+    <nav class="filters" aria-label="Chủ đề bài viết">
+      <a class="filter-link" href={archiveUrl} aria-current={tag ? undefined : "page"}>Tất cả</a>
+      {getTags(posts).map(value => <a class="filter-link" href={tagUrl(value)} aria-current={tag === value ? "page" : undefined}>{value}</a>)}
+    </nav>
+    <div class="archive-list">
+      {visiblePosts.length === 0 && <p class="empty-state">Chủ đề này chưa có bài viết.</p>}
+      {visiblePosts.map(post => (
+        <article class="archive-row">
+          <time datetime={dateISO(post.data.date)}>{displayDate(post.data.date)}</time>
+          <div class="archive-copy">
+            <TagBadge tag={post.data.tags[0]} />
+            <h2><a class="post-link" href={postUrl(post)}>{post.data.title}</a></h2>
+            <p>{post.data.description}</p>
+          </div>
+          <span class="card-arrow"><span class="arrow arrow-diagonal" aria-hidden="true"></span></span>
+        </article>
+      ))}
+    </div>
+  </div>
+</BlogLayout>
